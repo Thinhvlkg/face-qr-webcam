@@ -1,0 +1,13 @@
+tensorflow== 2.9.0rc2
+scipy
+scikit-learn
+opencv-python
+h5py
+matplotlib
+pillow
+requests
+psutil
+streamlit
+pandas
+numpy
+streamlit_option_menu
