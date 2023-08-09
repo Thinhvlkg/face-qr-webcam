@@ -1,4 +1,7 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
+import os
+import align.detect_face
 st.sidebar.image("thinh.gif", use_column_width=False)
 ## Hiển thị một đoạn văn bản dưới dạng markdown trong thanh bên. Đoạn văn bản này chứa thông tin về tác giả và một liên kết đến trang web của trường
 st.sidebar.markdown("""
@@ -111,8 +114,6 @@ import pickle
 import align.detect_face
 import facenet
 import openpyxl
-global window, khung_nhan_dien
-import align.detect_face
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
 def ham_diem_danh():
     displayed_info_3 = st.empty()
