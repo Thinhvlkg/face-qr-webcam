@@ -1,6 +1,6 @@
 tensorflow==2.9.0rc0
 protobuf==3.20
-numpy==1.19.5
+numpy==1.25.1
 scipy
 pandas
 scikit-learn
