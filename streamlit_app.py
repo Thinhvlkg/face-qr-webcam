@@ -123,6 +123,14 @@ import facenet
 import openpyxl
 global window, khung_nhan_dien
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
+def load_facenet_model():
+    facenet_model_url = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
+    facenet_model_path = "20180402-114759.pb"
+    if not os.path.exists(facenet_model_path):
+        st.write("Downloading Facenet model...")
+        gdown.download(facenet_model_url, facenet_model_path)
+        st.write("Facenet model downloaded successfully!")
+    return facenet_model_path
 def ham_diem_danh():
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
