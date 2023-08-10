@@ -10,6 +10,7 @@ psutil
 streamlit
 align
 nltk
+gensim
 pandas
 numpy
 streamlit_option_menu
