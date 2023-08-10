@@ -140,7 +140,7 @@ def ham_diem_danh():
     FILE_ID = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     # Load facemodel.pkl
-    facenet_model = load_model("20180402-114759.pb")
+    facenet_model = load_model("Models/20180402-114759.pb")
     model = None
     class_names = None
     with open(CLASSIFIER_PATH, 'rb') as file:
