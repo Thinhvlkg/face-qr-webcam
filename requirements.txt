@@ -5,7 +5,7 @@ scipy
 pandas
 scikit-learn
 opencv-python
-facenet
+facenet==1.0.5
 h5py
 gdown
 matplotlib
