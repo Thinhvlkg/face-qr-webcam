@@ -7,6 +7,7 @@ import time
 import datetime
 import os
 import align
+from tensorflow.keras.models import load_model
 print("Current working directory:", os.getcwd())
 
 st.sidebar.image("thinh.gif", use_column_width=False)
@@ -139,12 +140,12 @@ def ham_diem_danh():
     FILE_ID = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     # Load facemodel.pkl
+    facenet_model = load_model("20180402-114759.pb")
     model = None
     class_names = None
     with open(CLASSIFIER_PATH, 'rb') as file:
         model, class_names = pickle.load(file)
-    print("Custom Classifier, Successfully loaded")
-    
+    print("Custom Classifier, Successfully loaded")    
     # Load Facenet model from Google Drive
     gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", "20180402-114759.pb")
     FACENET_MODEL_PATH = "20180402-114759.pb"
