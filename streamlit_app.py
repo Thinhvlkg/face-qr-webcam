@@ -125,7 +125,6 @@ import openpyxl
 global window, khung_nhan_dien
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
 def load_facenet_model():
-    global facenet_model_path
     facenet_model_url = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     facenet_model_path = "20180402-114759.pb"
     if not os.path.exists(facenet_model_path):
@@ -134,7 +133,6 @@ def load_facenet_model():
         st.write("Facenet model downloaded successfully!")
     return facenet_model_path
 def ham_diem_danh():
-    global facenet_model_path
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
     col5.markdown("##### Giao diện điểm danh bằng khuôn mặt")
@@ -158,7 +156,8 @@ def ham_diem_danh():
     class_names = None
     with open(CLASSIFIER_PATH, 'rb') as file:
         model, class_names = pickle.load(file)
-    print("Custom Classifier, Successfully loaded")    
+    print("Custom Classifier, Successfully loaded")
+    facenet_model_path = load_facenet_model()
     # Load Facenet model from Google Drive
     #gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", "20180402-114759.pb")
     FACENET_MODEL_PATH = "20180402-114759.pb"
