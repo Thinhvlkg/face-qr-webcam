@@ -7,6 +7,7 @@ import time
 import datetime
 import os
 import align
+import tensorflow.compat.v1 as tf
 from tensorflow.keras.models import load_model
 print("Current working directory:", os.getcwd())
 
@@ -114,7 +115,7 @@ def ghi_nhan_diem_danh(ten, ma_sv, nganh, ngay_gio):
 import time
 import datetime
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
 import cv2
 import imutils
 import collections
