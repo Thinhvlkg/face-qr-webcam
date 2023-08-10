@@ -5,6 +5,7 @@ scipy
 pandas
 scikit-learn
 opencv-python
+facenet
 h5py
 matplotlib
 pillow
