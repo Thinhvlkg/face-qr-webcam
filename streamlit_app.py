@@ -114,11 +114,9 @@ import cv2
 import imutils
 import collections
 import pickle
-import align.detect_face
 import facenet
 import openpyxl
 global window, khung_nhan_dien
-import align.detect_face
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
 def ham_diem_danh():
     displayed_info_3 = st.empty()
@@ -132,7 +130,7 @@ def ham_diem_danh():
     INPUT_IMAGE_SIZE = 160
     desired_width = 460
     desired_height = 350
-    CLASSIFIER_PATH = "Models\\facemodel.pkl"
+    CLASSIFIER_PATH = "facemodel.pkl"
     FACENET_MODEL_PATH = "Models\\20180402-114759.pb"
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
@@ -151,7 +149,7 @@ def ham_diem_danh():
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "src\\align")
+            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align")
             people_detected = set()
             person_detected = collections.Counter()
             video_capture = None
