@@ -148,7 +148,7 @@ def ham_diem_danh():
     print("Custom Classifier, Successfully loaded")    
     # Load Facenet model from Google Drive
     gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", "20180402-114759.pb")
-    FACENET_MODEL_PATH = "20180402-114759.pb"
+    FACENET_MODEL_PATH = "Models/20180402-114759.pb"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
     with open(CLASSIFIER_PATH, 'rb') as file:
