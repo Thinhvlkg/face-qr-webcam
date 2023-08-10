@@ -1,4 +1,5 @@
-tensorflow== 2.9.0rc2
+tensorflow==2.5.0
+protobuf==3.20
 scipy
 scikit-learn
 opencv-python
