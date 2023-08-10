@@ -8,6 +8,7 @@ pillow
 requests
 psutil
 streamlit
+align
 pandas
 numpy
 streamlit_option_menu
