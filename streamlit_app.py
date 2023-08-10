@@ -140,6 +140,8 @@ def ham_diem_danh():
     FILE_ID = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     # Load facemodel.pkl
+    app_folder = os.path.dirname(os.path.abspath(__file__))
+    facenet_model_path = os.path.join(app_folder, "20180402-114759.pb")
     facenet_model = load_model("20180402-114759.pb")
     model = None
     class_names = None
