@@ -121,6 +121,19 @@ import facenet
 import openpyxl
 global window, khung_nhan_dien
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
+def download_pb_file():
+    # Tạo và xác thực đối tượng GoogleAuth
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+    # Tạo đối tượng GoogleDrive sử dụng xác thực đã được thực hiện
+    drive = GoogleDrive(gauth)
+    # ID của tệp 20180402-114759.pb trên Google Drive
+    file_id_pb = '1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des'
+    # Tải xuống tệp 20180402-114759.pb và lưu trữ nó dưới tên pb_file_name
+    pb_file_name = '20180402-114759.pb'
+    file_pb = drive.CreateFile({'id': file_id_pb})
+    file_pb.GetContentFile(pb_file_name)
+    return pb_file_name
 def ham_diem_danh():
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
