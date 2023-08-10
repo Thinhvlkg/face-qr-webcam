@@ -7,6 +7,7 @@ scikit-learn
 opencv-python
 facenet
 h5py
+gdown
 matplotlib
 openpyxl
 pillow
