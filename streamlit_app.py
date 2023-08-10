@@ -135,7 +135,7 @@ def ham_diem_danh():
     desired_width = 460
     desired_height = 350
     CLASSIFIER_PATH = "facemodel.pkl"
-    FACENET_MODEL_PATH = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
+    #FACENET_MODEL_PATH = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     FILE_ID = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     # Load facemodel.pkl
