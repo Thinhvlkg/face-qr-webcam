@@ -1,6 +1,7 @@
 tensorflow==2.5.0
 protobuf==3.20
 scipy
+pandas
 scikit-learn
 opencv-python
 h5py
@@ -12,6 +13,5 @@ streamlit
 align
 nltk
 gensim
-pandas
 numpy==1.24.0
 streamlit_option_menu
