@@ -9,6 +9,7 @@ requests
 psutil
 streamlit
 align
+nltk
 pandas
 numpy
 streamlit_option_menu
