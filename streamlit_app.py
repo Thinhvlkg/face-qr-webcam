@@ -4,6 +4,8 @@ import os
 import align.detect_face
 import time
 import datetime
+import os
+print("Current working directory:", os.getcwd())
 
 st.sidebar.image("thinh.gif", use_column_width=False)
 ## Hiển thị một đoạn văn bản dưới dạng markdown trong thanh bên. Đoạn văn bản này chứa thông tin về tác giả và một liên kết đến trang web của trường
