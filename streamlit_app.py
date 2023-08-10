@@ -152,7 +152,9 @@ def ham_diem_danh():
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align.detect_face")
+            align_module_path = os.path.join(os.path.dirname(__file__), "align")
+            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, align_module_path)
+            #pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align.detect_face")
             people_detected = set()
             person_detected = collections.Counter()
             video_capture = None
