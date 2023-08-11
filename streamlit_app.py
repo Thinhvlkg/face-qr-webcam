@@ -144,10 +144,9 @@ def ham_diem_danh():
     INPUT_IMAGE_SIZE = 160
     desired_width = 460
     desired_height = 350
-    CLASSIFIER_PATH = "facemodel.pkl"
-    #FACENET_MODEL_PATH = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
-    FILE_ID = "1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
-    file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
+    CLASSIFIER_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\facemodel.pkl"
+    FACENET_MODEL_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\20180402-114759.pb"
+    file_ds_lop = "D:\\sy python\\Trao bang tot nghiep\\DANH SACH NHAN CHINH THUC_1.xlsx"
     # Load facemodel.pkl
     #app_folder = os.path.dirname(os.path.abspath(__file__))
     #facenet_model_path = os.path.join(app_folder, "20180402-114759.pb")
@@ -172,22 +171,12 @@ def ham_diem_danh():
             config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             st.write('Loading feature extraction model')
-            facenet.load_model("/mount/src/face-qr-webcam/20180402-114759.pb")
+            facenet.load_model(FACENET_MODEL_PATH)
             images_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("input:0")
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
-            embedding_size = embeddings.shape[1]
-            align_module_path = os.path.join(os.path.dirname(__file__), "align")
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, align_module_path)
-            #pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align.detect_face")
-            #facenet.load_model(facenet_model_path)
-            #images_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("input:0")
-            #embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
-            #phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
-            #embedding_size = embeddings.get_shape()[1]
-            #align_module_path = os.path.join(os.path.dirname(__file__), "align")
-            #pnet, rnet, onet = align.detect_face.create_mtcnn(sess, align_module_path)
-            #pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align.detect_face")
+            embedding_size = embeddings.get_shape()[1]
+            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "D:\\sy python\\MiAI_FaceRecog_2\\src\\align")
             people_detected = set()
             person_detected = collections.Counter()
             video_capture = None
