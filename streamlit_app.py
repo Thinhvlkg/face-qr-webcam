@@ -138,7 +138,7 @@ def ham_diem_danh():
     desired_height = 350
     CLASSIFIER_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\facemodel.pkl"
     FACENET_MODEL_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\20180402-114759.pb"
-    file_ds_lop = "D:\\sy python\\Trao bang tot nghiep\\DANH SACH NHAN CHINH THUC_1.xlsx"
+    file_ds_lop = "D:\\sy python\\MiAI_FaceRecog_2\\DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
     with open(CLASSIFIER_PATH, 'rb') as file:
