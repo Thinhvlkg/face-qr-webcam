@@ -156,9 +156,7 @@ def ham_diem_danh():
     if os.path.exists(CLASSIFIER_PATH):
       with open(CLASSIFIER_PATH, 'rb') as file:
         # Tiếp tục xử lý tệp
-    else:
-      print(f"Tệp {CLASSIFIER_PATH} không tồn tại.")
-        model, class_names = pickle.load(file)
+      model, class_names = pickle.load(file)
     print("Custom Classifier, Successfully loaded")
     facenet_model_path = load_facenet_model()
     # Load Facenet model from Google Drive
