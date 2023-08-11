@@ -124,14 +124,6 @@ import facenet
 import openpyxl
 global window, khung_nhan_dien
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
-def load_facenet_model():
-    facenet_model_url = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
-    facenet_model_path = "20180402-114759.pb"
-    if not os.path.exists(facenet_model_path):
-        st.write("Downloading Facenet model...")
-        gdown.download(facenet_model_url, facenet_model_path)
-        st.write("Facenet model downloaded successfully!")
-    return facenet_model_path
 def ham_diem_danh():
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
@@ -147,21 +139,6 @@ def ham_diem_danh():
     CLASSIFIER_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\facemodel.pkl"
     FACENET_MODEL_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\20180402-114759.pb"
     file_ds_lop = "D:\\sy python\\Trao bang tot nghiep\\DANH SACH NHAN CHINH THUC_1.xlsx"
-    # Load facemodel.pkl
-    #app_folder = os.path.dirname(os.path.abspath(__file__))
-    #facenet_model_path = os.path.join(app_folder, "20180402-114759.pb")
-    #facenet_model = load_model(facenet_model_path)
-    model = None
-    class_names = None
-    if os.path.exists(CLASSIFIER_PATH):
-      with open(CLASSIFIER_PATH, 'rb') as file:
-        # Tiếp tục xử lý tệp
-      model, class_names = pickle.load(file)
-    print("Custom Classifier, Successfully loaded")
-    facenet_model_path = load_facenet_model()
-    # Load Facenet model from Google Drive
-    #gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", "20180402-114759.pb")
-    FACENET_MODEL_PATH = "20180402-114759.pb"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
     with open(CLASSIFIER_PATH, 'rb') as file:
@@ -172,7 +149,7 @@ def ham_diem_danh():
         sess = tf.compat.v1.Session(
             config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
-            st.write('Loading feature extraction model')
+            print('Loading feature extraction model')
             facenet.load_model(FACENET_MODEL_PATH)
             images_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("input:0")
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
@@ -316,6 +293,10 @@ def ham_diem_danh():
                                                                     f'Độ chính xác: <span style="color:green;">**{accuracy_percentage}**%</span>'
                                                 # Hiển thị văn bản được định dạng với màu sắc
                                                 displayed_info.markdown(colorized_content, unsafe_allow_html=True)
+                                                # Tạo chuỗi new_content để hiển thị thông tin của người được nhận dạng. Chuỗi này sẽ chứa tên, mã sinh viên và độ chính xác của người đó
+                                                #new_content = f'Tên: **{C_value}** <span style="margin-left: 10px;"></span> Mã sinh viên: **{B_value}** <span style="margin-left: 10px;"></span> Độ chính xác: **{accuracy_percentage}**%'
+                                                # Thông báo này có thể bị ghi đè mỗi khi người đó xuất hiện trong video stream
+                                                #displayed_info.markdown(new_content, unsafe_allow_html=True)
                                                 # cập nhật và hiển thị video stream liên tục
                                                 placeholder.image(frame, channels="BGR")
                                                 if not da_ghi_nhan:
@@ -323,6 +304,11 @@ def ham_diem_danh():
                                                     # đánh dấu rằng đã ghi nhận điểm danh cho người này. Điều này đảm bảo rằng thông tin điểm danh chỉ được ghi nhận một lần duy nhất cho mỗi lần xuất hiện của người được nhận dạng
                                                     da_ghi_nhan = True
                                                     break
+                                    #if recognized_name == name:
+                                        #new_content = "Đã điểm danh rồi"
+                                        #displayed_info.markdown(new_content)
+                                        #placeholder.image(frame, channels="BGR")
+
                 except Exception as e:
                     print("Error:", str(e))
 ####################################################################
