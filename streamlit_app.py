@@ -172,7 +172,7 @@ def ham_diem_danh():
             config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             st.write('Loading feature extraction model')
-            facenet.load_model("/mount/src/face-qr-webcam/20180402-114759.pb")
+            facenet.load_model("20180402-114759.pb")
             images_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("input:0")
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
