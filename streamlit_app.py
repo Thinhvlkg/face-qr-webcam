@@ -10,6 +10,7 @@ import align
 import tensorflow.compat.v1 as tf
 from tensorflow.keras.models import load_model
 import requests
+from align.detect_face import create_mtcnn
 print("Current working directory:", os.getcwd())
 
 st.sidebar.image("thinh.gif", use_column_width=False)
