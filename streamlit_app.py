@@ -137,17 +137,14 @@ def ham_diem_danh():
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
-    # Liên kết chia sẻ tệp facemodel.pkl từ Google Drive
-    facemodel_link = "https://drive.google.com/uc?id=1h3V2KvCalnfdbNpI1Qzzm7vT3bW238BT"
-    response_facemodel = requests.get(facemodel_link)
-    model, class_names = pickle.loads(response_facemodel.content)
-    st.write("Custom Classifier, Successfully loaded")
     
     # Liên kết chia sẻ tệp 20180402-114759.pb từ Google Drive
     pb_file_link = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     response_pb = requests.get(pb_file_link)
     with open("20180402-114759.pb", "wb") as f:
         f.write(response_pb.content)
+    
+    # Tải mô hình TensorFlow và tạo phiên
     with tf.Graph().as_default():
         gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -158,7 +155,7 @@ def ham_diem_danh():
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "D:\\sy python\\MiAI_FaceRecog_2\\src\\align")
+            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align")
             people_detected = set()
             person_detected = collections.Counter()
             video_capture = None
