@@ -152,7 +152,7 @@ def ham_diem_danh():
     # Lấy đường dẫn thư mục gốc của tệp mã hiện tại
     current_directory = os.path.dirname(os.path.abspath(__file__))
     pb_file_path = os.path.join(current_directory, "20180402-114759.pb")
-    
+     st.write(pb_file_path)
     with open(pb_file_path, "wb") as f:
         f.write(response_pb.content)
     
