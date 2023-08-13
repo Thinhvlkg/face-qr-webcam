@@ -138,15 +138,22 @@ def ham_diem_danh():
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
+    
     # Liên kết chia sẻ tệp facemodel.pkl từ Google Drive
     facemodel_link = "https://drive.google.com/uc?id=1h3V2KvCalnfdbNpI1Qzzm7vT3bW238BT"
     response_facemodel = requests.get(facemodel_link)
     model, class_names = pickle.loads(response_facemodel.content)
     st.write("Custom Classifier, Successfully loaded")
+    
     # Liên kết chia sẻ tệp 20180402-114759.pb từ Google Drive
     pb_file_link = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     response_pb = requests.get(pb_file_link)
-    with open("20180402-114759.pb", "wb") as f:
+    
+    # Lấy đường dẫn thư mục gốc của tệp mã hiện tại
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    pb_file_path = os.path.join(current_directory, "20180402-114759.pb")
+    
+    with open(pb_file_path, "wb") as f:
         f.write(response_pb.content)
     
     # Tải mô hình TensorFlow và tạo phiên
@@ -155,12 +162,13 @@ def ham_diem_danh():
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             print('Loading feature extraction model')
-            facenet_model = tf.saved_model.load("20180402-114759.pb")
+            facenet_model = tf.saved_model.load(pb_file_path)
             images_placeholder = facenet_model.graph.get_tensor_by_name("input:0")
             embeddings = facenet_model.graph.get_tensor_by_name("embeddings:0")
             phase_train_placeholder = facenet_model.graph.get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
             pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align")
+
             people_detected = set()
             person_detected = collections.Counter()
             video_capture = None
