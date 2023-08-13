@@ -128,29 +128,32 @@ def ham_diem_danh():
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
     col5.markdown("##### Giao diện điểm danh bằng khuôn mặt")
-    chinh = col4.slider("Điều chỉnh độ chính xác:", key="slider1", min_value=0.0, max_value=1.0, step=0.01, value=0.93)
+    chinh = col4.slider("Điều chỉnh độ chính xác:", key="slider1", min_value=0.0, max_value=1.0, step=0.01, value=0.95)
     MINSIZE = 20
     THRESHOLD = [0.6, 0.7, 0.7]
     FACTOR = 0.709
     IMAGE_SIZE = 182
     INPUT_IMAGE_SIZE = 160
-    desired_width = 460
-    desired_height = 350
-    CLASSIFIER_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\facemodel.pkl"
-    FACENET_MODEL_PATH = "D:\\sy python\\MiAI_FaceRecog_2\\Models\\20180402-114759.pb"
-    file_ds_lop = "D:\\sy python\\MiAI_FaceRecog_2\\DANH SACH NHAN CHINH THUC_1.xlsx"
+    file_ds_lop = "D:\\sy python\\Trao bang tot nghiep\\DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
-    with open(CLASSIFIER_PATH, 'rb') as file:
-        model, class_names = pickle.load(file)
-    print("Custom Classifier, Successfully loaded")
-    with tf.Graph().as_default():
+    # Liên kết chia sẻ tệp facemodel.pkl từ Google Drive
+    facemodel_link = "https://drive.google.com/uc?id=1h3V2KvCalnfdbNpI1Qzzm7vT3bW238BT"
+    response_facemodel = requests.get(facemodel_link)
+    model, class_names = pickle.loads(response_facemodel.content)
+    st.write("Custom Classifier, Successfully loaded")
+    
+    # Liên kết chia sẻ tệp 20180402-114759.pb từ Google Drive
+    pb_file_link = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
+    response_pb = requests.get(pb_file_link)
+    with open("20180402-114759.pb", "wb") as f:
+        f.write(response_pb.content)
+   with tf.Graph().as_default():
         gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
-        sess = tf.compat.v1.Session(
-            config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
+        sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             print('Loading feature extraction model')
-            facenet.load_model(FACENET_MODEL_PATH)
+            facenet.load_model("20180402-114759.pb")
             images_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("input:0")
             embeddings = tf.compat.v1.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.compat.v1.get_default_graph().get_tensor_by_name("phase_train:0")
