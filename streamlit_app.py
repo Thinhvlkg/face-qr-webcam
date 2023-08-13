@@ -148,7 +148,7 @@ def ham_diem_danh():
     response_pb = requests.get(pb_file_link)
     with open("20180402-114759.pb", "wb") as f:
         f.write(response_pb.content)
-   with tf.Graph().as_default():
+    with tf.Graph().as_default():
         gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
