@@ -152,24 +152,22 @@ def ham_diem_danh():
     # Lấy đường dẫn thư mục gốc của tệp mã hiện tại
     current_directory = os.path.dirname(os.path.abspath(__file__))
     pb_file_path = os.path.join(current_directory, "20180402-114759.pb")
-    st.write(pb_file_path)
     with open(pb_file_path, "wb") as f:
         f.write(response_pb.content)
     
     # Tải mô hình TensorFlow và tạo phiên
-    with tf.Graph().as_default():
+    with tf.compat.v1.Graph().as_default():
         gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             print('Loading feature extraction model')
-            model_path = "./"
-            
-            facenet_model = tf.saved_model.load(model_path, tags="serve")
+            facenet_model = tf.compat.v1.saved_model.load(sess, ["serve"], model_path)
             images_placeholder = facenet_model.graph.get_tensor_by_name("input:0")
             embeddings = facenet_model.graph.get_tensor_by_name("embeddings:0")
             phase_train_placeholder = facenet_model.graph.get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
             pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align")
+
 
             people_detected = set()
             person_detected = collections.Counter()
