@@ -125,6 +125,14 @@ import facenet
 import openpyxl
 global window, khung_nhan_dien
 ##################################### HÀM ĐIỂM DANH SINH VIÊN DÙNG WEBCAM ###############################################
+import os
+import streamlit as st
+import openpyxl
+import pickle
+import requests
+import tensorflow as tf
+import align.detect_face
+
 def ham_diem_danh():
     displayed_info_3 = st.empty()
     col4, col5 = st.columns([2, 1])
@@ -152,23 +160,31 @@ def ham_diem_danh():
     # Lấy đường dẫn thư mục gốc của tệp mã hiện tại
     current_directory = os.path.dirname(os.path.abspath(__file__))
     pb_file_path = os.path.join(current_directory, "20180402-114759.pb")
+    st.write(pb_file_path)
     with open(pb_file_path, "wb") as f:
         f.write(response_pb.content)
     
     # Tải mô hình TensorFlow và tạo phiên
-    with tf.compat.v1.Graph().as_default():
+    with tf.Graph().as_default():
         gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             print('Loading feature extraction model')
-            model_path = pb_file_path
             
-            facenet_model = tf.compat.v1.saved_model.load(sess, ["serve"], model_path)
-            images_placeholder = facenet_model.graph.get_tensor_by_name("input:0")
-            embeddings = facenet_model.graph.get_tensor_by_name("embeddings:0")
-            phase_train_placeholder = facenet_model.graph.get_tensor_by_name("phase_train:0")
+            # Đọc tệp protobuf và tạo mô hình
+            with tf.io.gfile.GFile(pb_file_path, 'rb') as f:
+                graph_def = tf.compat.v1.GraphDef()
+                graph_def.ParseFromString(f.read())
+                
+            tf.import_graph_def(graph_def, name='')
+            images_placeholder = sess.graph.get_tensor_by_name("input:0")
+            embeddings = sess.graph.get_tensor_by_name("embeddings:0")
+            phase_train_placeholder = sess.graph.get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
             pnet, rnet, onet = align.detect_face.create_mtcnn(sess, "align")
+
+
+
 
 
 
