@@ -162,7 +162,9 @@ def ham_diem_danh():
         sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
             print('Loading feature extraction model')
-            facenet_model = tf.saved_model.load(pb_file_path)
+            model_path = "./"
+            
+            facenet_model = tf.saved_model.load(model_path, tags="serve")
             images_placeholder = facenet_model.graph.get_tensor_by_name("input:0")
             embeddings = facenet_model.graph.get_tensor_by_name("embeddings:0")
             phase_train_placeholder = facenet_model.graph.get_tensor_by_name("phase_train:0")
