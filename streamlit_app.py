@@ -9,6 +9,7 @@ import os
 import align
 import tensorflow.compat.v1 as tf
 from tensorflow.keras.models import load_model
+import requests
 print("Current working directory:", os.getcwd())
 
 st.sidebar.image("thinh.gif", use_column_width=False)
@@ -137,7 +138,11 @@ def ham_diem_danh():
     file_ds_lop = "DANH SACH NHAN CHINH THUC_1.xlsx"
     wb = openpyxl.load_workbook(file_ds_lop)
     sheet = wb.active
-    
+    # Liên kết chia sẻ tệp facemodel.pkl từ Google Drive
+    facemodel_link = "https://drive.google.com/uc?id=1h3V2KvCalnfdbNpI1Qzzm7vT3bW238BT"
+    response_facemodel = requests.get(facemodel_link)
+    model, class_names = pickle.loads(response_facemodel.content)
+    st.write("Custom Classifier, Successfully loaded")
     # Liên kết chia sẻ tệp 20180402-114759.pb từ Google Drive
     pb_file_link = "https://drive.google.com/uc?id=1h3u6qf-pqsfDuYNWqDM2GOxquCQA_Des"
     response_pb = requests.get(pb_file_link)
